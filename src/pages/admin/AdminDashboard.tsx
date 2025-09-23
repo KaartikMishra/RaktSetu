@@ -121,7 +121,14 @@ export const AdminDashboard: React.FC = () => {
     { name: 'AB-', value: 0.5, color: '#6B7280' }
   ];
 
-  const recentRequests = [
+  const recentRequests: Array<{
+    id: string;
+    hospital: string;
+    bloodGroup: string;
+    units: number;
+    urgency: 'critical' | 'high' | 'medium' | 'low';
+    time: string;
+  }> = [
     { id: '1', hospital: 'City General Hospital', bloodGroup: 'O-', units: 3, urgency: 'critical', time: '5 mins ago' },
     { id: '2', hospital: 'Regional Medical Center', bloodGroup: 'A+', units: 2, urgency: 'high', time: '12 mins ago' },
     { id: '3', hospital: 'Emergency Care Unit', bloodGroup: 'B+', units: 1, urgency: 'medium', time: '25 mins ago' },

@@ -13,7 +13,7 @@ import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { DonorDashboard } from './pages/donor/DonorDashboard';
 import { BloodSearchPage } from './pages/seeker/BloodSearchPage';
 import { HospitalDashboard } from './pages/hospital/HospitalDashboard';
-import BloodSeeker from './pages/seeker/BloodSeeker';
+import BloodReruestForm from './pages/seeker/BloodRequestForm';
 import Seeker1 from './pages/seeker/Seeker1';
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
                 path="/seeker/request"
                 element={
                   <ProtectedRoute allowedRoles={['seeker']}>
-                    <BloodSeeker />
+                    <Seeker1 />
                   </ProtectedRoute>
                 }
               />
