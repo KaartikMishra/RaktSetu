@@ -27,7 +27,7 @@ export const useSidebar = () => {
   return context;
 };
 
-export const SidebarProvider = ({
+const SidebarProvider = ({
   children,
   open: openProp,
   setOpen: setOpenProp,

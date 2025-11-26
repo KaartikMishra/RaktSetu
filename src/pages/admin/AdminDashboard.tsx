@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { DashboardCard } from '../../components/dashboard/DashboardCard';
 import { Sidebar, SidebarBody, SidebarLink } from '../../components/ui/sidebar';
@@ -10,8 +10,6 @@ import {
   AlertTriangle, 
   Activity,
   TrendingUp,
-  Calendar,
-  MapPin,
   Bell,
   Download,
   Filter,
@@ -25,14 +23,13 @@ import {
   IconBrandTabler,
   IconSettings,
   IconUserBolt,
-  IconArrowLeft,
   IconUsers,
   IconHeart,
   IconBuilding,
   IconChartBar
 } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { cn } from '@/lib/utils';
 
 export const AdminDashboard: React.FC = () => {

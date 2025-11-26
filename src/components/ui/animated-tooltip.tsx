@@ -31,13 +31,13 @@ export const AnimatedTooltip = ({
     springConfig,
   );
 
-  const handleMouseMove = (event: any) => {
+  const handleMouseMove = (event: React.MouseEvent<HTMLImageElement>) => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
 
     animationFrameRef.current = requestAnimationFrame(() => {
-      const halfWidth = event.target.offsetWidth / 2;
+      const halfWidth = event.currentTarget.offsetWidth / 2;
       x.set(event.nativeEvent.offsetX - halfWidth);
     });
   };
@@ -48,8 +48,6 @@ export const AnimatedTooltip = ({
         <div
           className="group relative -mr-4"
           key={item.name}
-          onMouseEnter={() => setHoveredIndex(item.id)}
-          onMouseLeave={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === item.id && (
@@ -89,6 +87,8 @@ export const AnimatedTooltip = ({
             src={item.image}
             alt={item.name}
             className="relative !m-0 h-14 w-14 rounded-full border-2 border-white object-cover object-top !p-0 transition duration-500 group-hover:z-30 group-hover:scale-105"
+            onMouseEnter={() => setHoveredIndex(item.id)}
+            onMouseLeave={() => setHoveredIndex(null)}
           />
         </div>
       ))}

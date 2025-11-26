@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User } from '../types';
+import type { User } from '../types';
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string, role: string) => Promise<boolean>;
   logout: () => void;
-  register: (userData: any) => Promise<boolean>;
+  register: (userData: Partial<User> & { googleAuth?: boolean; name?: string; email?: string; phone?: string; role?: string }) => Promise<boolean>;
   loading: boolean;
 }
 
@@ -19,7 +19,7 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,16 +37,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Mock user data based on role
       const mockUser: User = {
         id: '1',
-        name: role === 'admin' ? 'Admin User' : 
+        name: role === 'admin' ? 'Admin User' :
               role === 'donor' ? 'John Donor' :
               role === 'hospital' ? 'City Hospital' : 'Blood Seeker',
         email,
         phone: '+1234567890',
-        role: role as any,
+        role: role as User['role'],
         verified: true,
         createdAt: new Date().toISOString(),
       };
@@ -67,35 +67,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('bloodbank_user', JSON.stringify(mockUser));
       return true;
     } catch (error) {
+      console.error('Login error:', error);
       return false;
     } finally {
       setLoading(false);
     }
   };
 
-  const register = async (userData: any): Promise<boolean> => {
+  const register = async (userData: Partial<User> & { googleAuth?: boolean; name?: string; email?: string; phone?: string; role?: string }): Promise<boolean> => {
     setLoading(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Handle Google authentication
       if (userData.googleAuth) {
         const mockUser: User = {
           id: '1',
-          name: userData.name,
-          email: userData.email,
+          name: userData.name || '',
+          email: userData.email || '',
           phone: userData.phone || '+1234567890',
-          role: userData.role as any,
+          role: (userData.role as User['role']) || 'seeker',
           verified: true,
           createdAt: new Date().toISOString(),
         };
-        
+
         setUser(mockUser);
         localStorage.setItem('bloodbank_user', JSON.stringify(mockUser));
       }
-      
+
       return true;
     } catch (error) {
+      console.error('Registration error:', error);
       return false;
     } finally {
       setLoading(false);
@@ -113,3 +115,5 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     </AuthContext.Provider>
   );
 };
+
+export { AuthProvider };
